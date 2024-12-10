@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EUpscale.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <StackLayout Padding="20" Spacing="20">
+        <Button Clicked="OnCapturePhotoClicked" Text="Escolher Imagem" />
+        <Entry
+            x:Name="ScaleFactorEntry"
+            Keyboard="Numeric"
+            Placeholder="Digite o fator de escala (ex: 2.0)" />
+        <Image x:Name="CapturedImage" HeightRequest="300" />
+        <Button Clicked="OnUpscaleImageClicked" Text="Aplicar Upscaling" />
+
+        <ActivityIndicator
+            x:Name="ProcessingIndicator"
+            IsRunning="False"
+            IsVisible="False"
+            Color="Blue" />
+
+        <Button Clicked="OnSaveImageClicked" Text="Salvar Imagem" />
+    </StackLayout>
+
+</ContentPage>
