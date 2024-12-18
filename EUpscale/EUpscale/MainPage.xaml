@@ -4,22 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <StackLayout Padding="20" Spacing="20">
-        <Button Clicked="OnCapturePhotoClicked" Text="Escolher Imagem" />
-        <Entry
-            x:Name="ScaleFactorEntry"
-            Keyboard="Numeric"
-            Placeholder="Digite o fator de escala (ex: 2.0)" />
-        <Image x:Name="CapturedImage" HeightRequest="300" />
-        <Button Clicked="OnUpscaleImageClicked" Text="Aplicar Upscaling" />
+    <ScrollView Margin="20">
+        <StackLayout
+            Padding="20"
+            Spacing="20"
+            VerticalOptions="Center">
+            <Button Clicked="OnCapturePhotoClicked" Text="Escolher Imagem" />
+            <Entry
+                x:Name="ScaleFactorEntry"
+                Keyboard="Numeric"
+                Placeholder="Digite o fator de escala (ex: 2.0)" />
+            <Image x:Name="CapturedImage" HeightRequest="300" />
+            <Button Clicked="OnUpscaleImageClicked" Text="Aplicar Upscaling" />
 
-        <ActivityIndicator
-            x:Name="ProcessingIndicator"
-            IsRunning="False"
-            IsVisible="False"
-            Color="Blue" />
+            <ActivityIndicator
+                x:Name="ProcessingIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                Color="Blue" />
 
-        <Button Clicked="OnSaveImageClicked" Text="Salvar Imagem" />
-    </StackLayout>
-
+            <Button Clicked="OnSaveImageClicked" Text="Salvar Imagem" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

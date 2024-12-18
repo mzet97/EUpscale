@@ -12,6 +12,33 @@ namespace EUpscale
             InitializeComponent();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await SolicitarPermissoesAsync();
+        }
+
+        private async Task SolicitarPermissoesAsync()
+        {
+            var statusCamera = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            if (statusCamera != PermissionStatus.Granted)
+            {
+                statusCamera = await Permissions.RequestAsync<Permissions.Camera>();
+            }
+
+            var statusArmazenamento = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (statusArmazenamento != PermissionStatus.Granted)
+            {
+                statusArmazenamento = await Permissions.RequestAsync<Permissions.StorageWrite>();
+            }
+
+            if (statusCamera != PermissionStatus.Granted || statusArmazenamento != PermissionStatus.Granted)
+            {
+                await DisplayAlert("Permissões Necessárias", "O aplicativo precisa de permissão para acessar a câmera e o armazenamento.", "OK");
+            }
+        }
+
+
         private async void OnCapturePhotoClicked(object sender, EventArgs e)
         {
             var photo = await MediaPicker.PickPhotoAsync();
@@ -32,7 +59,6 @@ namespace EUpscale
 
                     try
                     {
-                        // Mostrar o indicador de processamento
                         ProcessingIndicator.IsVisible = true;
                         ProcessingIndicator.IsRunning = true;
 
@@ -41,7 +67,6 @@ namespace EUpscale
                             ImageUpscalerParallel.UpscaleImageNewtonOptimizedJpg(_photoPath, _upscaledPhotoPath, scaleFactor);
                         });
 
-                        // Atualizar a imagem processada na interface
                         CapturedImage.Source = ImageSource.FromFile(_upscaledPhotoPath);
                     }
                     catch (Exception ex)
@@ -50,7 +75,6 @@ namespace EUpscale
                     }
                     finally
                     {
-                        // Esconder o indicador de processamento
                         ProcessingIndicator.IsVisible = false;
                         ProcessingIndicator.IsRunning = false;
                     }
